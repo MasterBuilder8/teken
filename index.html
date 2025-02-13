@@ -155,8 +155,8 @@
             </div>
 
             <!-- work section -->
-             <div class="grid" id="maingrid">
-                <div class="grid-item" data-image="https://via.placeholder.com/150?text=Row+1" data-url="details-page.html?row=1">
+             <div class="grid" id="mainGrid">
+                <div class="grid-item" data-image="https://via.placeholder.com/150?text=Row+1" data-details="Row 1 - Project Details: <br> <a href='https://example.com'>Visit Site</a>">
                     <div class="content-left">Left Content 1</div>
                     <div class="content-middle">Middle Content 1</div>
                     <div class="content-right">Right Content 1</div>
@@ -274,70 +274,64 @@
              </footer>
     </main>
     <script>
-        document.querySelectorAll('.industry-item').forEach(item => {
-            item.addEventListener('click', () => {
-                item.classList.add('fade-out'); // Add fade-out effect
-                setTimeout(() => item.remove(), 400); // Remove after transition
+        const gridItems = document.querySelectorAll(".grid-item");
+        const previewImage = document.getElementById("preview");
+        const mainGrid = document.getElementById("mainGrid");
+        const detailsSection = document.getElementById("detailsSection");
+        const detailsContent = document.getElementById("detailsContent");
+        let lastHoveredItem = null;
+        let lastMove = 0;
+
+        document.addEventListener("mousemove", (e) => {
+            const now = Date.now();
+            if (now - lastMove > 20) {
+                previewImage.style.left = `${e.pageX}px`;
+                previewImage.style.top = `${e.pageY}px`;
+                lastMove = now;
+            }
+        });
+
+        gridItems.forEach(item => {
+            item.addEventListener("mouseenter", () => {
+                previewImage.src = item.getAttribute("data-image");
+                previewImage.style.display = "block";
+                previewImage.style.opacity = "1";
+                item.classList.add("italic");
+                lastHoveredItem = item;
+            });
+
+            item.addEventListener("mouseleave", () => {
+                previewImage.style.opacity = "0";
+                previewImage.style.display = "none";
+                item.classList.remove("italic");
+            });
+
+            item.addEventListener("click", (e) => {
+                e.preventDefault();
+                openDetails(item);
             });
         });
-        </script>
-
-    <script>
-     const gridItems = document.querySelectorAll(".grid-item");
-     const previewImage = document.getElementById("preview");
-     const mainGrid = document.getElementById("mainGrid");
-     const detailsSection = document.getElementById("detailsSection");
-     const detailsContent = document.getElementById("detailsContent");
-     let lastHoveredItem = null;
-     let lastMove = 0;
-
-     document.addEventListener("mousemove", (e) => {
-        const now = Date.now();
-        if (now - lastMove > 20) {
-            previewImage.style.left = `${e.pageX}px`;
-            previewImage.style.top = `${e.pageY}px`;
-            lastMove = now;
-        }
-      });
-
-     gridItems.forEach(item => {
-        item.addEventListener("mouseenter", () => {
-            previewImage.src = item.getAttribute("data-image");
-            previewImage.style.display = "block";
-            previewImage.style.opacity = "1";
-            item.classList.add("italic");
-            lastHoveredItem = item;
-        });
-
-        item.addEventListener("mouseleave", () => {
-            previewImage.style.opacity = "0";
-            previewImage.style.display = "none";
-            item.classList.remove("italic");
-        });
-
-        item.addEventListener("click", () => {
-            openDetails(item);
-        });
-     });
-
-     previewImage.addEventListener("click", () => {
-        if (lastHoveredItem) {
-            openDetails(lastHoveredItem);
-        }
-     });
-
-     function openDetails(item) {
-        detailsContent.innerHTML = item.getAttribute("data-details");
-        mainGrid.style.display = "none";
-        detailsSection.style.display = "block";
-        console.log(item.getAttribute("data-details"));
-     }
-
-     function goBack() {
-        mainGrid.style.display = "grid";
-        detailsSection.style.display = "none";
-     }
-    </script>
         
+        previewImage.addEventListener("click", () => {
+            if (lastHoveredItem) {
+                openDetails(lastHoveredItem);
+            }
+        });
+
+        function openDetails(item) {
+            detailsContent.innerHTML = item.getAttribute("data-details");
+            mainGrid.style.display = "none";
+            detailsSection.style.display = "block";
+
+            history.pushState(null, "", item.getAttribute("href"));
+        }
+
+        function goBack() {
+            mainGrid.style.display = "grid";
+            detailsSection.style.display = "none";
+
+            history.pushState(null, "", window.location.pathname);
+        }
+    </script>
 </body>
 </html>

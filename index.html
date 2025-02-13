@@ -153,25 +153,39 @@
                     </div>
                 </div>
             </div>
-            
-            <div id="work" class="section-work">
-                <div class="work-sticky-wrapper">
-                    <div class="work-sticky-heading">
-                        <h2 class="work-sticky-h2">
-                            This dedication result in
-                            <br>
-                            <span class="is--grey">impactful memorable work...</span>
-                        </h2>
-                    </div>
-                    <div class="work-container">
-                        <div class="work-grid">
-                            <a id="work-1" href="#" class="work-item">image source</a>
-                            <a id="work-2" href="#" class="work-item">image source</a>
-                            <a id="work-3" href="#" class="work-item"> image source</a>
-                        </div>
-                    </div>
+
+            <!-- work section -->
+             <div class="grid" id="maingrid">
+                <div class="grid-item" data-image="https://via.placeholder.com/150?text=Row+1" data-url="details-page.html?row=1">
+                    <div class="content-left">Left Content 1</div>
+                    <div class="content-middle">Middle Content 1</div>
+                    <div class="content-right">Right Content 1</div>
                 </div>
-            </div>
+                <div class="grid-item" data-image="https://via.placeholder.com/150?text=Row+2" data-details="Row 2 - Project Details: <br> <a href='https://example2.com'>Visit Site</a>">
+                    <div class="content-left">Left Content 2</div>
+                    <div class="content-middle">Middle Content 2</div>
+                    <div class="content-right">Right Content 2</div>
+                </div>
+                <div class="grid-item" data-image="https://via.placeholder.com/150?text=Row+3" data-details="Row 3 - Project Details: <br> <a href='https://example3.com'>Visit Site</a>">
+                    <div class="content-left">Left Content 3</div>
+                    <div class="content-middle">Middle Content 3</div>
+                    <div class="content-right">Right Content 3</div>
+                </div>
+                <div class="grid-item" data-image="https://via.placeholder.com/150?text=Row+4" data-details="Row 4 - Project Details: <br> <a href='https://example4.com'>Visit Site</a>">
+                    <div class="content-left">Left Content 4</div>
+                    <div class="content-middle">Middle Content 4</div>
+                    <div class="content-right">Right Content 4</div>
+                </div>
+             </div>
+
+             <!-- back end of the preview image-->
+             <div class="details-section" id="detailsSection">
+                <div id="detailsContent"></div>
+                <button class="back-button" onclick="goBack()">Back to Main Page</button>
+             </div>
+            <img id="preview" class="preview-image" alt="Preview" loading="lazy">
+
+
             <div id="awards" class="section-awards">
                 <div class="recognition-wrapper">
                     <h2>🎉</h2>
@@ -267,6 +281,63 @@
             });
         });
         </script>
+
+    <script>
+     const gridItems = document.querySelectorAll(".grid-item");
+     const previewImage = document.getElementById("preview");
+     const mainGrid = document.getElementById("mainGrid");
+     const detailsSection = document.getElementById("detailsSection");
+     const detailsContent = document.getElementById("detailsContent");
+     let lastHoveredItem = null;
+     let lastMove = 0;
+
+     document.addEventListener("mousemove", (e) => {
+        const now = Date.now();
+        if (now - lastMove > 20) {
+            previewImage.style.left = `${e.pageX}px`;
+            previewImage.style.top = `${e.pageY}px`;
+            lastMove = now;
+        }
+      });
+
+     gridItems.forEach(item => {
+        item.addEventListener("mouseenter", () => {
+            previewImage.src = item.getAttribute("data-image");
+            previewImage.style.display = "block";
+            previewImage.style.opacity = "1";
+            item.classList.add("italic");
+            lastHoveredItem = item;
+        });
+
+        item.addEventListener("mouseleave", () => {
+            previewImage.style.opacity = "0";
+            previewImage.style.display = "none";
+            item.classList.remove("italic");
+        });
+
+        item.addEventListener("click", () => {
+            openDetails(item);
+        });
+     });
+
+     previewImage.addEventListener("click", () => {
+        if (lastHoveredItem) {
+            openDetails(lastHoveredItem);
+        }
+     });
+
+     function openDetails(item) {
+        detailsContent.innerHTML = item.getAttribute("data-details");
+        mainGrid.style.display = "none";
+        detailsSection.style.display = "block";
+        console.log(item.getAttribute("data-details"));
+     }
+
+     function goBack() {
+        mainGrid.style.display = "grid";
+        detailsSection.style.display = "none";
+     }
+    </script>
         
 </body>
 </html>

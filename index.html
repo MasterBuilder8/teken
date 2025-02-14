@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="media.css">
     <link href="https://fonts.cdnfonts.com/css/pp-neue-montreal" rel="stylesheet">
+    <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
     <title>OutPerform</title>
 </head>
 
@@ -155,7 +156,7 @@
             </div>
 
             <!-- work section -->
-             <div class="grid" id="mainGrid">
+             <div class="grid" id="maingrid">
                 <div class="grid-item" data-image="https://via.placeholder.com/150?text=Row+1" data-details="Row 1 - Project Details: <br> <a href='https://example.com'>Visit Site</a>">
                     <div class="content-left">Left Content 1</div>
                     <div class="content-middle">Middle Content 1</div>
@@ -273,64 +274,66 @@
                   </div>
              </footer>
     </main>
-    <script>
+
+     <!--javascript-->
+     <script>
+        // Existing grid preview & inline details code
         const gridItems = document.querySelectorAll(".grid-item");
         const previewImage = document.getElementById("preview");
-        const mainGrid = document.getElementById("mainGrid");
+        const mainGrid = document.getElementById("maingrid");
         const detailsSection = document.getElementById("detailsSection");
         const detailsContent = document.getElementById("detailsContent");
         let lastHoveredItem = null;
         let lastMove = 0;
-
+    
         document.addEventListener("mousemove", (e) => {
-            const now = Date.now();
-            if (now - lastMove > 20) {
-                previewImage.style.left = `${e.pageX}px`;
-                previewImage.style.top = `${e.pageY}px`;
-                lastMove = now;
-            }
+          const now = Date.now();
+          if (now - lastMove > 20) {
+            previewImage.style.left = `${e.pageX}px`;
+            previewImage.style.top = `${e.pageY}px`;
+            lastMove = now;
+          }
         });
-
+    
         gridItems.forEach(item => {
-            item.addEventListener("mouseenter", () => {
-                previewImage.src = item.getAttribute("data-image");
-                previewImage.style.display = "block";
-                previewImage.style.opacity = "1";
-                item.classList.add("italic");
-                lastHoveredItem = item;
-            });
-
-            item.addEventListener("mouseleave", () => {
-                previewImage.style.opacity = "0";
-                previewImage.style.display = "none";
-                item.classList.remove("italic");
-            });
-
-            item.addEventListener("click", (e) => {
-                e.preventDefault();
-                openDetails(item);
-            });
+          item.addEventListener("mouseenter", () => {
+            previewImage.src = item.getAttribute("data-image");
+            previewImage.style.display = "block";
+            previewImage.style.opacity = "1";
+            item.classList.add("italic");
+            lastHoveredItem = item;
+          });
+    
+          item.addEventListener("mouseleave", () => {
+            previewImage.style.opacity = "0";
+            previewImage.style.display = "none";
+            item.classList.remove("italic");
+          });
+    
+          // Intercept click to show inline details instead of navigating away
+          item.addEventListener("click", (e) => {
+            e.preventDefault();
+            openDetails(item);
+          });
         });
-        
+    
         previewImage.addEventListener("click", () => {
-            if (lastHoveredItem) {
-                openDetails(lastHoveredItem);
-            }
+          if (lastHoveredItem) {
+            openDetails(lastHoveredItem);
+          }
         });
-
+    
         function openDetails(item) {
-            detailsContent.innerHTML = item.getAttribute("data-details");
-            mainGrid.style.display = "none";
-            detailsSection.style.display = "block";
-
-            history.pushState(null, "", item.getAttribute("href"));
+          detailsContent.innerHTML = item.getAttribute("data-details");
+          mainGrid.style.display = "none";
+          detailsSection.style.display = "block";
+          history.pushState(null, "", item.getAttribute("data-url") || "");
         }
-
+    
         function goBack() {
-            mainGrid.style.display = "grid";
-            detailsSection.style.display = "none";
-
-            history.pushState(null, "", window.location.pathname);
+          mainGrid.style.display = "grid";
+          detailsSection.style.display = "none";
+          history.pushState(null, "", window.location.pathname);
         }
     </script>
 </body>

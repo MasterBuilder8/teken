@@ -99,6 +99,34 @@ body {
     font-weight: 500;
 }
 
+.video-container{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.8s ease-in-out, height 0.8s ease-in-out; /* Smooth transition */
+}
+
+.video{
+    height: 64.1138%;
+    width: 576px;
+    margin-top: 3.125em;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    transition: width 0.8s ease-in-out, height 0.8s ease-in-out; /* Smooth growth */
+}
+
+/* When the user scrolls past hero, enlarge the video */
+.video-container.scrolled {
+    height: 120vh; /* Expand the container slightly */
+}
+
+.video-container.scrolled .video {
+    width: 968px; /* Enlarged width */
+    height: 100%; /* Enlarged height */
+}
+
 .location-container{
     justify-content: center;
     align-items: center;

@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="media.css">
     <link href="https://fonts.cdnfonts.com/css/pp-neue-montreal" rel="stylesheet">
-    <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
     <title>OutPerform</title>
 </head>
 
@@ -30,9 +29,15 @@
                     <h1 class="hero-h1">Crafting Brands, Websites, and Immersive Digital Product</h1>
                 </div>
                 <p class="hero-heading-text">
-                    "Good design catches the eye; great design drives result. We focus on real growth, boosting conversion, and geniunely helping your business shine."
+                    Good design catches the eye; great design drives result. We focus on real growth, boosting conversion, and geniunely helping your business shine.
                 </p>
             </div>
+            <!-- video-->
+             <div class="video-container">
+                <video class="video" autoplay muted loop>
+                    <source src="https://cdn.prod.website-files.com/66fc152695f7656df535cb41%2F674da19206d0ff231131d235_655b3644ecfdd3bc61e81730_Comp%2012mp4-transcode-transcode.mp4" type="video/mp4">
+                </video>
+             </div>
             <div class="location-container">
                 <div class="location-h2">
                     <h2>
@@ -335,6 +340,25 @@
           detailsSection.style.display = "none";
           history.pushState(null, "", window.location.pathname);
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+         const videoContainer = document.querySelector(".video-container");
+         const heroSection = document.querySelector(".hero-heading");
+
+       const observer = new IntersectionObserver(
+        ([entry]) => {
+            if (!entry.isIntersecting) {
+                videoContainer.classList.add("scrolled"); // Expand video when hero is out of view
+            } else {
+                videoContainer.classList.remove("scrolled"); // Reset when hero is in view
+            }
+        },
+        { threshold: 0.2 } // Trigger when 20% of hero section is visible
+    );
+
+    observer.observe(heroSection);
+ });
+
     </script>
 </body>
 </html>

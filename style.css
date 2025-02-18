@@ -210,13 +210,13 @@ h2{
 
 .Servicestitle{
     font-family: "PP Neue Montreal", sans-serif;
-    margin: 0;
+    margin: 0 10px;
     padding: 0;
     background-color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 80vh;
     text-align: center;
 }
 
@@ -242,14 +242,6 @@ h4 {
     margin-top: 0.2em;
 }
 
-.accidentals {
-    font-size: 1.2em;
-    font-style: italic;
-    color: #E74C3C;
-    position: absolute;
-    white-space: nowrap;
-    opacity: 0; /* Initially hidden */
-}
 
 .industry-container {
     flex-flow: column;
@@ -332,11 +324,12 @@ div {
 
 .services-container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr; /* Three columns: Left (Sticky Heading), Center (Services), Right (Content) */
+    grid-template-columns: 1fr 2fr 1fr; /* Three columns: Left (Sticky Heading), Center (Services), Right (Content) */
     gap: 2em;
-    grid-column-gap: 5em;
+    max-width: 800px;
+    align-items: start;
     width: 90vw;
-    margin: 0 auto;
+    margin: 50px auto;
     padding: 2em 0;
     position: relative;
 }
@@ -346,16 +339,20 @@ div {
     position: sticky;
     top: 7em;
     align-self: start;
+    text-align: left;
 }
 
 /* Main Services List */
 .services-list-wrapper {
     width: 100%;
+    display:flex;
+    flex-direction: column;
+    gap: 2em;
 }
 
 /* Individual Service Item */
 .services-item {
-    display: grid;
+    display: flex;
     flex-direction: column;
     gap: 1em;
     align-items: center;

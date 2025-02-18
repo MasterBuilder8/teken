@@ -208,6 +208,49 @@ h2{
     padding: 0 5%; /* Prevents text from touching screen edges */
 }
 
+.Servicestitle{
+    font-family: "PP Neue Montreal", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h4 {
+    font-size: 5vw;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin: 0;
+}
+
+.intentional{
+    margin-bottom: -0.2em; /* Moves the DESIGN text closer */
+}
+
+.design {
+    margin-top: 0.2em;
+}
+
+.accidentals {
+    font-size: 1.2em;
+    font-style: italic;
+    color: #E74C3C;
+    position: absolute;
+    white-space: nowrap;
+    opacity: 0; /* Initially hidden */
+}
+
 .industry-container {
     flex-flow: column;
     justify-content: flex-start;
